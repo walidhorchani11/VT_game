@@ -14,12 +14,13 @@ const generateNumber = () => {
   return Math.floor(Math.random() * (9999 - 0 + 1)) + 0;
 };
 
+const validateInput = (val) => {
+  return val.replace(/[^0-9]/g, '');
+};
+
 const GameScreen = (props) => {
   const rdmNumber = useRef(null);
-  const [userNumberOne, setUserNumberOne] = useState();
-  const [userNumberTwo, setUserNumberTwo] = useState();
-  const [userNumberThree, setUserNumberThree] = useState();
-  const [userNumberFor, setUserNumberFor] = useState();
+  const [userNumber, setUserNumber] = useState(['', '', '', '']);
 
   useEffect(() => {
     rdmNumber.current = generateNumber().toString().split('');
@@ -27,8 +28,20 @@ const GameScreen = (props) => {
     console.log(' le type de ::::', rdmNumber.current);
   }, []);
 
-  const validateInput = (val) => {
-    return val.replace(/[^0-9]/g, '');
+  const changeTextHandler = (val, indice) => {
+    let copyUserNumber = [...userNumber];
+    copyUserNumber[indice] = validateInput(val);
+    setUserNumber(copyUserNumber);
+
+    console.log('UserNumber after change', userNumber);
+  };
+
+  const resetHandler = () => {
+    setUserNumber(['', '', '', '']);
+  };
+
+  const checkUserNumber = () => {
+    userNumber;
   };
 
   return (
@@ -38,34 +51,30 @@ const GameScreen = (props) => {
           <Input
             style={styles.inputText}
             onChangeText={(val) => {
-              setUserNumberOne(validateInput(val));
-              console.log('one:', userNumberOne);
+              changeTextHandler(val, 0);
             }}
-            value={userNumberOne}
+            value={userNumber[0]}
           />
           <Input
             style={styles.inputText}
             onChangeText={(val) => {
-              setUserNumberTwo(validateInput(val));
-              console.log('two:', userNumberTwo);
+              changeTextHandler(val, 1);
             }}
-            value={userNumberTwo}
+            value={userNumber[1]}
           />
           <Input
             style={styles.inputText}
             onChangeText={(val) => {
-              setUserNumberThree(validateInput(val));
-              console.log('three:', userNumberThree);
+              changeTextHandler(val, 2);
             }}
-            value={userNumberThree}
+            value={userNumber[2]}
           />
           <Input
             style={styles.inputText}
             onChangeText={(val) => {
-              setUserNumberFor(validateInput(val));
-              console.log('for:', userNumberFor);
+              changeTextHandler(val, 3);
             }}
-            value={userNumberFor}
+            value={userNumber[3]}
           />
         </View>
 
@@ -74,7 +83,11 @@ const GameScreen = (props) => {
             <Button color={colors.secondo} title="check" />
           </View>
           <View style={styles.button}>
-            <Button color={colors.secondo} title="reset" />
+            <Button
+              color={colors.secondo}
+              title="reset"
+              onPress={resetHandler}
+            />
           </View>
         </View>
 
