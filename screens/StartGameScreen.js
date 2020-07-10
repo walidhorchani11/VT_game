@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View, Button, Text } from 'react-native';
 
 import colors from '../constants/colors';
 import IndicatorContainer from '../components/IndicatorContainer';
 
-const StartGameScreen = () => {
+const StartGameScreen = (props) => {
   return (
     <View style={styles.screen}>
       <View style={styles.descriptionContainer}>
@@ -29,7 +29,11 @@ const StartGameScreen = () => {
         <Text style={styles.text}>Numero n'existe pas</Text>
       </View>
       <View style={styles.buttonContainer}>
-        <Button title="Start" color={colors.secondo} />
+        <Button
+          title="Start"
+          color={colors.secondo}
+          onPress={props.onStartGame}
+        />
       </View>
     </View>
   );
