@@ -1,5 +1,12 @@
 import React, { useEffect, useRef } from 'react';
-import { StyleSheet, View, Button, Text } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Button,
+  Text,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
 
 import Input from '../components/Input';
 
@@ -17,16 +24,27 @@ const GameScreen = (props) => {
   }, []);
 
   return (
-    <View style={styles.screen}>
-      <View style={styles.inputContainer}>
-        <Input style={styles.inputText} />
-        <Input style={styles.inputText} />
-        <Input style={styles.inputText} />
-        <Input style={styles.inputText} />
-      </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.screen}>
+        <View style={styles.inputContainer}>
+          <Input style={styles.inputText} />
+          <Input style={styles.inputText} />
+          <Input style={styles.inputText} />
+          <Input style={styles.inputText} />
+        </View>
 
-      <Button title="retour" onPress={props.onGoBack} />
-    </View>
+        <View style={styles.buttonContainer}>
+          <View style={styles.button}>
+            <Button title="check" onPress={props.onGoBack} />
+          </View>
+          <View style={styles.button}>
+            <Button title="reset" onPress={props.onGoBack} />
+          </View>
+        </View>
+
+        <Button title="retour" onPress={props.onGoBack} />
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -44,6 +62,16 @@ const styles = StyleSheet.create({
   inputText: {
     width: 40,
     height: 40,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+  button: {
+    width: 100,
   },
 });
 
