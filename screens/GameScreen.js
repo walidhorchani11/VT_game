@@ -1,14 +1,14 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   StyleSheet,
   View,
   Button,
-  Text,
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
 
 import Input from '../components/Input';
+import colors from '../constants/colors';
 
 const generateNumber = () => {
   return Math.floor(Math.random() * (9999 - 0 + 1)) + 0;
@@ -16,6 +16,10 @@ const generateNumber = () => {
 
 const GameScreen = (props) => {
   const rdmNumber = useRef(null);
+  const [userNumberOne, setUserNumberOne] = useState();
+  const [userNumberTwo, setUserNumberTwo] = useState();
+  const [userNumberThree, setUserNumberThree] = useState();
+  const [userNumberFor, setUserNumberFor] = useState();
 
   useEffect(() => {
     rdmNumber.current = generateNumber().toString().split('');
@@ -23,22 +27,54 @@ const GameScreen = (props) => {
     console.log(' le type de ::::', rdmNumber.current);
   }, []);
 
+  const validateInput = (val) => {
+    return val.replace(/[^0-9]/g, '');
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.screen}>
         <View style={styles.inputContainer}>
-          <Input style={styles.inputText} />
-          <Input style={styles.inputText} />
-          <Input style={styles.inputText} />
-          <Input style={styles.inputText} />
+          <Input
+            style={styles.inputText}
+            onChangeText={(val) => {
+              setUserNumberOne(validateInput(val));
+              console.log('one:', userNumberOne);
+            }}
+            value={userNumberOne}
+          />
+          <Input
+            style={styles.inputText}
+            onChangeText={(val) => {
+              setUserNumberTwo(validateInput(val));
+              console.log('two:', userNumberTwo);
+            }}
+            value={userNumberTwo}
+          />
+          <Input
+            style={styles.inputText}
+            onChangeText={(val) => {
+              setUserNumberThree(validateInput(val));
+              console.log('three:', userNumberThree);
+            }}
+            value={userNumberThree}
+          />
+          <Input
+            style={styles.inputText}
+            onChangeText={(val) => {
+              setUserNumberFor(validateInput(val));
+              console.log('for:', userNumberFor);
+            }}
+            value={userNumberFor}
+          />
         </View>
 
         <View style={styles.buttonContainer}>
           <View style={styles.button}>
-            <Button title="check" onPress={props.onGoBack} />
+            <Button color={colors.secondo} title="check" />
           </View>
           <View style={styles.button}>
-            <Button title="reset" onPress={props.onGoBack} />
+            <Button color={colors.secondo} title="reset" />
           </View>
         </View>
 
