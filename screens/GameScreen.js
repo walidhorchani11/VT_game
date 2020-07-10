@@ -5,6 +5,7 @@ import {
   Button,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from 'react-native';
 
 import Input from '../components/Input';
@@ -21,6 +22,7 @@ const validateInput = (val) => {
 const GameScreen = (props) => {
   const rdmNumber = useRef(null);
   const [userNumber, setUserNumber] = useState(['', '', '', '']);
+  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
     rdmNumber.current = generateNumber().toString().split('');
@@ -33,7 +35,7 @@ const GameScreen = (props) => {
     copyUserNumber[indice] = validateInput(val);
     setUserNumber(copyUserNumber);
 
-    console.log('UserNumber after change', userNumber);
+    setChecked(false);
   };
 
   const resetHandler = () => {
@@ -41,7 +43,18 @@ const GameScreen = (props) => {
   };
 
   const checkUserNumber = () => {
-    userNumber;
+    if (userNumber.indexOf('') !== -1) {
+      Alert.alert('check number', 'renseigner tous les champs', [
+        {
+          text: 'okizz',
+          style: 'destructive',
+          onPress: () => {
+            setChecked(true);
+          },
+        },
+      ]);
+      return;
+    }
   };
 
   return (
@@ -54,6 +67,7 @@ const GameScreen = (props) => {
               changeTextHandler(val, 0);
             }}
             value={userNumber[0]}
+            checked={checked}
           />
           <Input
             style={styles.inputText}
@@ -61,6 +75,7 @@ const GameScreen = (props) => {
               changeTextHandler(val, 1);
             }}
             value={userNumber[1]}
+            checked={checked}
           />
           <Input
             style={styles.inputText}
@@ -68,6 +83,7 @@ const GameScreen = (props) => {
               changeTextHandler(val, 2);
             }}
             value={userNumber[2]}
+            checked={checked}
           />
           <Input
             style={styles.inputText}
@@ -75,12 +91,17 @@ const GameScreen = (props) => {
               changeTextHandler(val, 3);
             }}
             value={userNumber[3]}
+            checked={checked}
           />
         </View>
 
         <View style={styles.buttonContainer}>
           <View style={styles.button}>
-            <Button color={colors.secondo} title="check" />
+            <Button
+              color={colors.secondo}
+              title="check"
+              onPress={checkUserNumber}
+            />
           </View>
           <View style={styles.button}>
             <Button

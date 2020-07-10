@@ -9,7 +9,11 @@ const Input = (props) => {
       {...props}
       keyboardType={props.keyboardType}
       placeholder="?"
-      style={[styles.input, props.style]}
+      style={
+        props.checked && props.value === ''
+          ? [styles.input, styles.inputError, props.style]
+          : [styles.input, props.style]
+      }
     />
   );
 };
@@ -21,6 +25,16 @@ const styles = StyleSheet.create({
     borderColor: colors.primo,
     marginHorizontal: 5,
     textAlign: 'center',
+  },
+  inputError: {
+    borderColor: 'red',
+    borderWidth: 2,
+    shadowColor: 'red',
+    backgroundColor: 'white',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    elevation: 15,
   },
 });
 
