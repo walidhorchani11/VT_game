@@ -11,8 +11,20 @@ import {
 import Input from '../components/Input';
 import colors from '../constants/colors';
 
+const MAX_LENGTH_NUMBER = 4;
+
 const generateNumber = () => {
   return Math.floor(Math.random() * (9999 - 0 + 1)) + 0;
+};
+
+const formatNumberToArray = (number) => {
+  let arrayNumber = number.toString().split('');
+  const toAdd = MAX_LENGTH_NUMBER - arrayNumber.length;
+  for (let i = 0; i < toAdd; i++) {
+    arrayNumber.unshift('0');
+  }
+
+  return arrayNumber;
 };
 
 const validateInput = (val) => {
@@ -23,18 +35,17 @@ const GameScreen = (props) => {
   const rdmNumber = useRef(null);
   const [userNumber, setUserNumber] = useState(['', '', '', '']);
   const [checked, setChecked] = useState(false);
+  const [resIndicator, setResIndicator] = useState(['', '', '', '']);
 
   useEffect(() => {
-    rdmNumber.current = generateNumber().toString().split('');
-
-    console.log(' le type de ::::', rdmNumber.current);
+    rdmNumber.current = formatNumberToArray(generateNumber());
+    console.log('nombre generer finale est ::::', rdmNumber.current);
   }, []);
 
   const changeTextHandler = (val, indice) => {
     let copyUserNumber = [...userNumber];
     copyUserNumber[indice] = validateInput(val);
     setUserNumber(copyUserNumber);
-
     setChecked(false);
   };
 
