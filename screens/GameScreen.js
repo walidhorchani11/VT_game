@@ -66,6 +66,21 @@ const GameScreen = (props) => {
       ]);
       return;
     }
+
+    let ind = ['', '', '', ''];
+    const test = ['2', '2', '1', '9'];
+    userNumber.forEach((numGuessed, index) => {
+      test.forEach((numGenerated, i) => {
+        if (numGuessed === numGenerated) {
+          if (index === i) {
+            ind[index] = ind[index].concat('T');
+          } else {
+            ind[index] = ind[index].concat('V');
+          }
+        }
+      });
+    });
+    console.log('resultat indicator is:::', ind);
   };
 
   return (
