@@ -31,15 +31,30 @@ const validateInput = (val) => {
   return val.replace(/[^0-9]/g, '');
 };
 
+const controlUserGuess = (userGuess, randomNumber) => {
+  let ind = ['', '', '', ''];
+  // fixer bug si un num avc indicator V et son occurence est 1 seule fois & il est deja en "T" alors on met un "x" sauf si il existe en dautre place...a bien verifier en tous cas
+  userGuess.forEach((numGuessed, index) => {
+    randomNumber.forEach((numGenerated, i) => {
+      if (numGuessed === numGenerated) {
+        if (index === i) {
+          ind[index] = ind[index].concat('T');
+        } else {
+          ind[index] = ind[index].concat('V');
+        }
+      }
+    });
+  });
+  console.log('resultat indicator is:::', ind);
+
+  return ind;
+};
+
 const GameScreen = (props) => {
   const rdmNumber = useRef(null);
   const [userNumber, setUserNumber] = useState(['', '', '', '']);
   const [checked, setChecked] = useState(false);
   const [resIndicator, setResIndicator] = useState(['', '', '', '']);
-  // const inputOne = useRef(null);
-  // const inputTwo = useRef(null);
-  // const inputThree = useRef(null);
-  // const inputFour = useRef(null);
   const inputsRef = useRef([
     React.createRef(),
     React.createRef(),
@@ -80,62 +95,31 @@ const GameScreen = (props) => {
       return;
     }
 
-    let ind = ['', '', '', ''];
-    // fixer bug si un num avc indicator V et son occurence est 1 seule fois & il est deja en "T" alors on met un "x" sauf si il existe en dautre place...a bien verifier en tous cas
-    userNumber.forEach((numGuessed, index) => {
-      rdmNumber.current.forEach((numGenerated, i) => {
-        if (numGuessed === numGenerated) {
-          if (index === i) {
-            ind[index] = ind[index].concat('T');
-          } else {
-            ind[index] = ind[index].concat('V');
-          }
-        }
-      });
-    });
-    console.log('resultat indicator is:::', ind);
+    return controlUserGuess(userNumber, rdmNumber.current);
+  };
+
+  const displayInput = (indice) => {
+    return (
+      <Input
+        style={styles.inputText}
+        onChangeText={(val) => {
+          changeTextHandler(val, indice);
+        }}
+        value={userNumber[indice]}
+        checked={checked}
+        ref={inputsRef.current[indice]}
+      />
+    );
   };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.screen}>
         <View style={styles.inputContainer}>
-          <Input
-            style={styles.inputText}
-            onChangeText={(val) => {
-              changeTextHandler(val, 0);
-            }}
-            value={userNumber[0]}
-            checked={checked}
-            ref={inputsRef.current[0]}
-          />
-          <Input
-            style={styles.inputText}
-            onChangeText={(val) => {
-              changeTextHandler(val, 1);
-            }}
-            value={userNumber[1]}
-            checked={checked}
-            ref={inputsRef.current[1]}
-          />
-          <Input
-            style={styles.inputText}
-            onChangeText={(val) => {
-              changeTextHandler(val, 2);
-            }}
-            value={userNumber[2]}
-            checked={checked}
-            ref={inputsRef.current[2]}
-          />
-          <Input
-            style={styles.inputText}
-            onChangeText={(val) => {
-              changeTextHandler(val, 3);
-            }}
-            value={userNumber[3]}
-            checked={checked}
-            ref={inputsRef.current[3]}
-          />
+          {displayInput(0)}
+          {displayInput(1)}
+          {displayInput(2)}
+          {displayInput(3)}
         </View>
 
         <View style={styles.buttonContainer}>
