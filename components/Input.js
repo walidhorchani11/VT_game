@@ -3,9 +3,10 @@ import { StyleSheet, TextInput } from 'react-native';
 
 import colors from '../constants/colors';
 
-const Input = (props) => {
+const Input = React.forwardRef((props, ref) => {
   return (
     <TextInput
+      ref={ref}
       {...props}
       keyboardType={props.keyboardType}
       placeholder="?"
@@ -16,7 +17,7 @@ const Input = (props) => {
       }
     />
   );
-};
+});
 
 const styles = StyleSheet.create({
   input: {

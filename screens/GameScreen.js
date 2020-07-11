@@ -36,6 +36,16 @@ const GameScreen = (props) => {
   const [userNumber, setUserNumber] = useState(['', '', '', '']);
   const [checked, setChecked] = useState(false);
   const [resIndicator, setResIndicator] = useState(['', '', '', '']);
+  // const inputOne = useRef(null);
+  // const inputTwo = useRef(null);
+  // const inputThree = useRef(null);
+  // const inputFour = useRef(null);
+  const inputsRef = useRef([
+    React.createRef(),
+    React.createRef(),
+    React.createRef(),
+    React.createRef(),
+  ]);
 
   useEffect(() => {
     rdmNumber.current = formatNumberToArray(generateNumber());
@@ -43,6 +53,9 @@ const GameScreen = (props) => {
   }, []);
 
   const changeTextHandler = (val, indice) => {
+    if (val.length == 1 && indice !== MAX_LENGTH_NUMBER - 1) {
+      inputsRef.current[indice + 1].current.focus();
+    }
     let copyUserNumber = [...userNumber];
     copyUserNumber[indice] = validateInput(val);
     setUserNumber(copyUserNumber);
@@ -68,9 +81,9 @@ const GameScreen = (props) => {
     }
 
     let ind = ['', '', '', ''];
-    const test = ['2', '2', '1', '9'];
+    // fixer bug si un num avc indicator V et son occurence est 1 seule fois & il est deja en "T" alors on met un "x" sauf si il existe en dautre place...a bien verifier en tous cas
     userNumber.forEach((numGuessed, index) => {
-      test.forEach((numGenerated, i) => {
+      rdmNumber.current.forEach((numGenerated, i) => {
         if (numGuessed === numGenerated) {
           if (index === i) {
             ind[index] = ind[index].concat('T');
@@ -94,6 +107,7 @@ const GameScreen = (props) => {
             }}
             value={userNumber[0]}
             checked={checked}
+            ref={inputsRef.current[0]}
           />
           <Input
             style={styles.inputText}
@@ -102,6 +116,7 @@ const GameScreen = (props) => {
             }}
             value={userNumber[1]}
             checked={checked}
+            ref={inputsRef.current[1]}
           />
           <Input
             style={styles.inputText}
@@ -110,6 +125,7 @@ const GameScreen = (props) => {
             }}
             value={userNumber[2]}
             checked={checked}
+            ref={inputsRef.current[2]}
           />
           <Input
             style={styles.inputText}
@@ -118,6 +134,7 @@ const GameScreen = (props) => {
             }}
             value={userNumber[3]}
             checked={checked}
+            ref={inputsRef.current[3]}
           />
         </View>
 
