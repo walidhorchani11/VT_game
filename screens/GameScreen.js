@@ -67,6 +67,18 @@ const GameScreen = (props) => {
     console.log('nombre generer finale est ::::', rdmNumber.current);
   }, []);
 
+  useEffect(() => {
+    let count = 0;
+    userNumber.map((elem) => {
+      if (elem.length > 0) {
+        count++;
+      }
+    });
+    if (count == 4) {
+      Keyboard.dismiss();
+    }
+  }, [userNumber]);
+
   const changeTextHandler = (val, indice) => {
     if (val.length == 1 && indice !== MAX_LENGTH_NUMBER - 1) {
       inputsRef.current[indice + 1].current.focus();
