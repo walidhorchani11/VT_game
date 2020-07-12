@@ -6,10 +6,12 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
+  Text,
 } from 'react-native';
 
 import Input from '../components/Input';
 import colors from '../constants/colors';
+import IndicatorContainer from '../components/IndicatorContainer';
 
 const MAX_LENGTH_NUMBER = 4;
 
@@ -107,7 +109,7 @@ const GameScreen = (props) => {
       return;
     }
 
-    return controlUserGuess(userNumber, rdmNumber.current);
+    setResIndicator(controlUserGuess(userNumber, rdmNumber.current));
   };
 
   const displayInput = (indice) => {
@@ -132,6 +134,21 @@ const GameScreen = (props) => {
           {displayInput(1)}
           {displayInput(2)}
           {displayInput(3)}
+        </View>
+
+        <View style={styles.inputContainer}>
+          <IndicatorContainer>
+            <Text>{resIndicator[0]}</Text>
+          </IndicatorContainer>
+          <IndicatorContainer>
+            <Text>{resIndicator[1]}</Text>
+          </IndicatorContainer>
+          <IndicatorContainer>
+            <Text>{resIndicator[2]}</Text>
+          </IndicatorContainer>
+          <IndicatorContainer>
+            <Text>{resIndicator[3]}</Text>
+          </IndicatorContainer>
         </View>
 
         <View style={styles.buttonContainer}>
