@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
   text: {
     flex: 1,
     padding: 10,
+    fontFamily: 'Fondamento-italic',
   },
 });
 
