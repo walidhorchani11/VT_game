@@ -55,8 +55,9 @@ const controlUserGuess = (userGuess, randomNumber) => {
 
 const GameScreen = (props) => {
   const rdmNumber = useRef(null);
-  const [userNumber, setUserNumber] = useState(['', '', '', '']);
+  const countTry = useRef(0);
   const [checked, setChecked] = useState(false);
+  const [userNumber, setUserNumber] = useState(['', '', '', '']);
   const [resIndicator, setResIndicator] = useState(['', '', '', '']);
   const inputsRef = useRef([
     React.createRef(),
@@ -109,6 +110,18 @@ const GameScreen = (props) => {
       ]);
       return;
     }
+
+    countTry.current = countTry.current + 1;
+    props.onTry(countTry.current);
+    console.log('tentiativeeeee:::', countTry.current);
+
+    let x = parseInt(userNumber.join(''));
+    let y = parseInt(rdmNumber.current.join(''));
+    if (x === y) {
+      console.log('egaliteee..........');
+      props.onGameOver();
+    }
+    console.log('usernumber to string issss::::', typeof y);
 
     setResIndicator(controlUserGuess(userNumber, rdmNumber.current));
   };

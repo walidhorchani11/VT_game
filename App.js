@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
@@ -6,6 +6,7 @@ import * as Font from 'expo-font';
 import Header from './components/Header';
 import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
+import EndGameScreen from './screens/EndGameScreen';
 
 const fetchFonts = () => {
   console.log('on fetch font ....');
@@ -18,6 +19,8 @@ const fetchFonts = () => {
 export default function App() {
   const [startGame, setStartGame] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
+  const countTry = useRef(0);
 
   if (!isLoaded) {
     return (
@@ -31,22 +34,43 @@ export default function App() {
     );
   }
 
+  const incrementCountTry = (val) => {
+    countTry.current = val;
+  };
+
   const startGameHandler = () => {
     setStartGame(true);
+  };
+
+  const gameOverHandler = () => {
+    console.log('game is over ...');
+    setGameOver(true);
   };
 
   const goBack = () => {
     setStartGame(false);
   };
 
+  let displayScreen = () => {
+    if (gameOver) {
+      return <EndGameScreen countTry={countTry.current} />;
+    } else if (startGame && !gameOver) {
+      return (
+        <GameScreen
+          onGoBack={goBack}
+          onGameOver={gameOverHandler}
+          onTry={incrementCountTry}
+        />
+      );
+    } else {
+      return <StartGameScreen onStartGame={startGameHandler} />;
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Header />
-      {startGame ? (
-        <GameScreen onGoBack={goBack} />
-      ) : (
-        <StartGameScreen onStartGame={startGameHandler} />
-      )}
+      {displayScreen()}
     </View>
   );
 }
