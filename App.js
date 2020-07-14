@@ -8,9 +8,10 @@ import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
 
 const fetchFonts = () => {
+  console.log('on fetch font ....');
   return Font.loadAsync({
     'Fondamento-italic': require('./assets/fonts/Fondamento-Italic.ttf'),
-    'Fondamento-Regular': require('./assets/fonts/Fondamento-Regular.ttf'),
+    'Fondamento-regular': require('./assets/fonts/Fondamento-Regular.ttf'),
   });
 };
 

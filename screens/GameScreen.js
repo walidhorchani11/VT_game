@@ -12,6 +12,7 @@ import {
 import Input from '../components/Input';
 import colors from '../constants/colors';
 import IndicatorContainer from '../components/IndicatorContainer';
+import defaults_styles from '../constants/defaults_styles';
 
 const MAX_LENGTH_NUMBER = 4;
 
@@ -128,7 +129,7 @@ const GameScreen = (props) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.screen}>
+      <View style={defaults_styles.screen}>
         <View style={styles.inputContainer}>
           {displayInput(0)}
           {displayInput(1)}
@@ -175,12 +176,6 @@ const GameScreen = (props) => {
 };
 
 const styles = StyleSheet.create({
-  screen: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    flex: 1,
-  },
   inputContainer: {
     flexDirection: 'row',
     marginVertical: 40,
