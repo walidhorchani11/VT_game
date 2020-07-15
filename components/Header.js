@@ -6,7 +6,7 @@ import colors from '../constants/colors';
 const Header = () => {
   return (
     <View style={styles.header}>
-      <Text style={styles.text}>Vache VS toureau</Text>
+      <Text style={styles.text}>Vache VS taureau</Text>
     </View>
   );
 };
