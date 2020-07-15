@@ -71,6 +71,9 @@ const GameScreen = (props) => {
     console.log('nombre generer finale est ::::', rdmNumber.current);
   }, []);
 
+  /**
+   * hide keyboard if all inputs are filled
+   */
   useEffect(() => {
     let count = 0;
     userNumber.map((elem) => {
@@ -97,7 +100,30 @@ const GameScreen = (props) => {
     setUserNumber(['', '', '', '']);
   };
 
-  const checkUserNumber = () => {
+  /**
+   * if user guesse the masked number, set state gameOver to true for navigate to EndGameScreen
+   *
+   * @param {array} userNumber number entered per user
+   * @param {array} rdmNumber number generate per application
+   */
+  const launchGameOver = (userNumber, rdmNumber) => {
+    const x = parseInt(userNumber.join(''));
+    const y = parseInt(rdmNumber.join(''));
+    if (x === y) {
+      props.onGameOver();
+    }
+  };
+
+  const incrementCountTry = () => {
+    countTry.current = countTry.current + 1;
+    props.onTry(countTry.current);
+    console.log('tentiativeeeee:::', countTry.current);
+  };
+
+  /**
+   * alert user if some input are empty
+   */
+  const validateUserNumber = (userNumber) => {
     if (userNumber.indexOf('') !== -1) {
       Alert.alert('check number', 'renseigner tous les champs', [
         {
@@ -110,19 +136,12 @@ const GameScreen = (props) => {
       ]);
       return;
     }
+  };
 
-    countTry.current = countTry.current + 1;
-    props.onTry(countTry.current);
-    console.log('tentiativeeeee:::', countTry.current);
-
-    let x = parseInt(userNumber.join(''));
-    let y = parseInt(rdmNumber.current.join(''));
-    if (x === y) {
-      console.log('egaliteee..........');
-      props.onGameOver();
-    }
-    console.log('usernumber to string issss::::', typeof y);
-
+  const checkUserNumber = () => {
+    validateUserNumber(userNumber);
+    incrementCountTry();
+    launchGameOver(userNumber, rdmNumber.current);
     setResIndicator(controlUserGuess(userNumber, rdmNumber.current));
   };
 
