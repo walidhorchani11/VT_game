@@ -7,12 +7,15 @@ import colors from '../constants/colors';
 const EndGameSceen = (props) => {
   return (
     <View style={defaults_styles.screen}>
-      <Text>game over....::: {props.countTry}</Text>
       <View style={styles.imageContainer}>
-        <Image source={require('../assets/success.gif')} style={styles.image} />
+        <Image
+          source={require('../assets/success.gif')}
+          style={styles.image}
+          fadeDuration={3000}
+        />
       </View>
       <Text>number: {props.rdmNumber}</Text>
-      <Text>nombre d'essaie: {props.rdmNumber}</Text>
+      <Text>nombre d'essaie: {props.countTry}</Text>
     </View>
   );
 };
@@ -23,7 +26,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 270,
     height: 270,
-    backgroundColor: 'grey',
     borderWidth: 2,
     borderRadius: 10,
     borderColor: colors.secondo,
