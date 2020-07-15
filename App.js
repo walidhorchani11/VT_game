@@ -21,6 +21,7 @@ export default function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const countTry = useRef(0);
+  const rdmNumber = useRef(null);
 
   if (!isLoaded) {
     return (
@@ -33,6 +34,10 @@ export default function App() {
       />
     );
   }
+
+  const saveRdmNumber = (val) => {
+    rdmNumber.current = val;
+  };
 
   const incrementCountTry = (val) => {
     countTry.current = val;
@@ -53,13 +58,19 @@ export default function App() {
 
   let displayScreen = () => {
     if (gameOver) {
-      return <EndGameScreen countTry={countTry.current} />;
+      return (
+        <EndGameScreen
+          countTry={countTry.current}
+          rdmNumber={rdmNumber.current}
+        />
+      );
     } else if (startGame && !gameOver) {
       return (
         <GameScreen
           onGoBack={goBack}
           onGameOver={gameOverHandler}
           onTry={incrementCountTry}
+          saveRdmNumber={saveRdmNumber}
         />
       );
     } else {

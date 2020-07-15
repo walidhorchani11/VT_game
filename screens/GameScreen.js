@@ -67,8 +67,10 @@ const GameScreen = (props) => {
   ]);
 
   useEffect(() => {
-    rdmNumber.current = formatNumberToArray(generateNumber());
+    const nbr = generateNumber();
+    rdmNumber.current = formatNumberToArray(nbr);
     console.log('nombre generer finale est ::::', rdmNumber.current);
+    props.saveRdmNumber(nbr);
   }, []);
 
   /**

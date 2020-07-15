@@ -1,8 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 const EndGameSceen = (props) => {
-  return <Text>game over....::: {props.countTry}</Text>;
+  return (
+    <View>
+      <Text>game over....::: {props.countTry}</Text>
+      <Text>number issss....::: {props.rdmNumber}</Text>
+    </View>
+  );
 };
 
 export default EndGameSceen;
