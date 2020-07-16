@@ -20,6 +20,7 @@ export default function App() {
   const [startGame, setStartGame] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [gameOver, setGameOver] = useState(false);
+  const [histories, setHistories] = useState([]);
   const countTry = useRef(0);
   const rdmNumber = useRef(null);
 
@@ -34,6 +35,15 @@ export default function App() {
       />
     );
   }
+
+  const updateHistories = (val) => {
+    if (typeof val !== 'number') {
+      val = parseInt(val.join(''));
+    }
+    let copyHistories = [...histories, val];
+    setHistories(copyHistories);
+    console.log('historique est :::', histories);
+  };
 
   const saveRdmNumber = (val) => {
     rdmNumber.current = val;
@@ -62,6 +72,7 @@ export default function App() {
         <EndGameScreen
           countTry={countTry.current}
           rdmNumber={rdmNumber.current}
+          histories={histories}
         />
       );
     } else if (startGame && !gameOver) {
@@ -71,6 +82,7 @@ export default function App() {
           onGameOver={gameOverHandler}
           onTry={incrementCountTry}
           saveRdmNumber={saveRdmNumber}
+          updateHistories={updateHistories}
         />
       );
     } else {

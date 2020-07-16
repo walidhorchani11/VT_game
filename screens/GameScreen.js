@@ -143,6 +143,7 @@ const GameScreen = (props) => {
   const checkUserNumber = () => {
     validateUserNumber(userNumber);
     incrementCountTry();
+    props.updateHistories(userNumber);
     launchGameOver(userNumber, rdmNumber.current);
     setResIndicator(controlUserGuess(userNumber, rdmNumber.current));
   };
