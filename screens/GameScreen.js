@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { AntDesign } from '@expo/vector-icons';
 import {
   StyleSheet,
   View,
@@ -7,12 +8,14 @@ import {
   Keyboard,
   Alert,
   Text,
+  ScrollView,
 } from 'react-native';
 
 import Input from '../components/Input';
-import colors from '../constants/colors';
 import IndicatorContainer from '../components/IndicatorContainer';
 import defaults_styles from '../constants/defaults_styles';
+import MainButton from '../components/MainButton';
+import Card from '../components/Card';
 
 const MAX_LENGTH_NUMBER = 4;
 
@@ -59,6 +62,7 @@ const GameScreen = (props) => {
   const [checked, setChecked] = useState(false);
   const [userNumber, setUserNumber] = useState(['', '', '', '']);
   const [resIndicator, setResIndicator] = useState(['', '', '', '']);
+  const [guesses, setGuesses] = useState([]);
   const inputsRef = useRef([
     React.createRef(),
     React.createRef(),
@@ -146,6 +150,8 @@ const GameScreen = (props) => {
     props.updateHistories(userNumber);
     launchGameOver(userNumber, rdmNumber.current);
     setResIndicator(controlUserGuess(userNumber, rdmNumber.current));
+    setGuesses((currentGuesses) => [userNumber, ...currentGuesses]);
+    console.log('guesses:::', guesses);
   };
 
   const displayInput = (indice) => {
@@ -162,58 +168,77 @@ const GameScreen = (props) => {
     );
   };
 
+  const renderGuesses = (guesse, indice) => {
+    return (
+      <Card style={styles.guesse} key={indice}>
+        <Text># {indice} : </Text>
+        <Text>{guesse}</Text>
+      </Card>
+    );
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={defaults_styles.screen}>
-        <View style={styles.inputContainer}>
-          {displayInput(0)}
-          {displayInput(1)}
-          {displayInput(2)}
-          {displayInput(3)}
-        </View>
-
-        <View style={styles.inputContainer}>
-          <IndicatorContainer>
-            <Text>{resIndicator[0]}</Text>
-          </IndicatorContainer>
-          <IndicatorContainer>
-            <Text>{resIndicator[1]}</Text>
-          </IndicatorContainer>
-          <IndicatorContainer>
-            <Text>{resIndicator[2]}</Text>
-          </IndicatorContainer>
-          <IndicatorContainer>
-            <Text>{resIndicator[3]}</Text>
-          </IndicatorContainer>
-        </View>
-
-        <View style={styles.buttonContainer}>
-          <View style={styles.button}>
-            <Button
-              color={colors.secondo}
-              title="check"
-              onPress={checkUserNumber}
-            />
+      <View style={[defaults_styles.screen, styles.screen]}>
+        <View style={{ alignItems: 'center' }}>
+          <View style={styles.inputContainer}>
+            {displayInput(0)}
+            {displayInput(1)}
+            {displayInput(2)}
+            {displayInput(3)}
           </View>
-          <View style={styles.button}>
-            <Button
-              color={colors.secondo}
-              title="reset"
-              onPress={resetHandler}
-            />
+          <View style={styles.inputContainer}>
+            <IndicatorContainer>
+              <Text>{resIndicator[0]}</Text>
+            </IndicatorContainer>
+            <IndicatorContainer>
+              <Text>{resIndicator[1]}</Text>
+            </IndicatorContainer>
+            <IndicatorContainer>
+              <Text>{resIndicator[2]}</Text>
+            </IndicatorContainer>
+            <IndicatorContainer>
+              <Text>{resIndicator[3]}</Text>
+            </IndicatorContainer>
           </View>
         </View>
+        {/* view pour contenir liste essaies */}
+        <View style={styles.listGuessesContainer}>
+          <ScrollView contentContainerStyle={styles.listGuessesScroll}>
+            {guesses.map((guesse, indice) => {
+              let len = guesses.length;
+              return renderGuesses(guesse, len - indice);
+            })}
+          </ScrollView>
+        </View>
+        {/* view pour contenir tous button */}
+        <View style={{ alignItems: 'center' }}>
+          <View style={styles.buttonContainer}>
+            <MainButton onPress={checkUserNumber} style={styles.button}>
+              <AntDesign name="check" size={32} />
+            </MainButton>
 
-        <Button title="retour" onPress={props.onGoBack} />
+            <MainButton onPress={resetHandler} style={styles.button}>
+              <AntDesign name="reload1" size={32} />
+            </MainButton>
+          </View>
+
+          <MainButton onPress={props.onGoBack} style={styles.button}>
+            <AntDesign name="home" size={32} />
+          </MainButton>
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
+  screen: {
+    justifyContent: 'space-between',
+  },
   inputContainer: {
     flexDirection: 'row',
-    marginVertical: 40,
+    marginVertical: 5,
   },
   inputText: {
     width: 40,
@@ -228,6 +253,22 @@ const styles = StyleSheet.create({
   },
   button: {
     width: 100,
+    height: 50,
+  },
+  listGuessesContainer: {
+    flex: 1,
+    width: '100%',
+  },
+  listGuessesScroll: {
+    flexGrow: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  guesse: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '50%',
+    height: 30,
   },
 });
 

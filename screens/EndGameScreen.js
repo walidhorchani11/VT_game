@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { AntDesign } from '@expo/vector-icons';
 import {
   StyleSheet,
   Text,
@@ -11,6 +12,7 @@ import {
 
 import defaults_styles from '../constants/defaults_styles';
 import colors from '../constants/colors';
+import MainButton from '../components/MainButton';
 
 const EndGameSceen = (props) => {
   const [showHistories, setShowHistories] = useState(false);
@@ -38,14 +40,12 @@ const EndGameSceen = (props) => {
       <Text>nombre d'essaie: {props.countTry}</Text>
 
       <View>
-        <Button
-          title={showHistories ? 'hide' : 'show'}
-          onPress={() => setShowHistories(!showHistories)}
-        />
-        <Button
-          title={showHistories ? 'hide' : 'show'}
-          onPress={() => setShowHistories(!showHistories)}
-        />
+        <MainButton onPress={() => setShowHistories(!showHistories)}>
+          <AntDesign name={showHistories ? 'close' : 'menuunfold'} size={32} />
+        </MainButton>
+        <MainButton onPress={() => {}}>
+          <AntDesign name="home" size={32} />
+        </MainButton>
       </View>
 
       {showHistories && displayHistories()}
