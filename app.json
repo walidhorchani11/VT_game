@@ -8,7 +8,7 @@
     "privacy": "public",
     "sdkVersion": "37.0.0",
     "platforms": ["android"],
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
