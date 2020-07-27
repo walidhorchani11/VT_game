@@ -6,7 +6,7 @@
     "description": "jeu vache taureau",
     "orientation": "portrait",
     "privacy": "public",
-    "sdkVersion": "37.0.0",
+    "sdkVersion": "38.0.0",
     "platforms": ["android"],
     "icon": "./assets/logo.png",
     "splash": {
