@@ -182,24 +182,30 @@ const GameScreen = (props) => {
       <View style={[defaults_styles.screen, styles.screen]}>
         <View style={{ alignItems: 'center' }}>
           <View style={styles.inputContainer}>
-            {displayInput(0)}
-            {displayInput(1)}
-            {displayInput(2)}
-            {displayInput(3)}
-          </View>
-          <View style={styles.inputContainer}>
-            <IndicatorContainer>
-              <Text>{resIndicator[0]}</Text>
-            </IndicatorContainer>
-            <IndicatorContainer>
-              <Text>{resIndicator[1]}</Text>
-            </IndicatorContainer>
-            <IndicatorContainer>
-              <Text>{resIndicator[2]}</Text>
-            </IndicatorContainer>
-            <IndicatorContainer>
-              <Text>{resIndicator[3]}</Text>
-            </IndicatorContainer>
+            <View>
+              {displayInput(0)}
+              <IndicatorContainer>
+                <Text>{resIndicator[0]}</Text>
+              </IndicatorContainer>
+            </View>
+            <View>
+              {displayInput(1)}
+              <IndicatorContainer>
+                <Text>{resIndicator[1]}</Text>
+              </IndicatorContainer>
+            </View>
+            <View>
+              {displayInput(2)}
+              <IndicatorContainer>
+                <Text>{resIndicator[2]}</Text>
+              </IndicatorContainer>
+            </View>
+            <View>
+              {displayInput(3)}
+              <IndicatorContainer>
+                <Text>{resIndicator[3]}</Text>
+              </IndicatorContainer>
+            </View>
           </View>
         </View>
         {/* view pour contenir liste essaies */}
