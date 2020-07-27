@@ -3,12 +3,12 @@ import { AntDesign } from '@expo/vector-icons';
 import {
   StyleSheet,
   View,
-  Button,
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
   Text,
   ScrollView,
+  FlatList,
 } from 'react-native';
 
 import Input from '../components/Input';
@@ -168,11 +168,13 @@ const GameScreen = (props) => {
     );
   };
 
-  const renderGuesses = (guesse, indice) => {
+  //react add default arg at the end, so dans notre cas indice sera derniere arg
+  //itemData is an object contient index & item is the value
+  const renderGuesses = (listLength, itemData) => {
     return (
-      <Card style={styles.guesse} key={indice}>
-        <Text># {indice} : </Text>
-        <Text>{guesse}</Text>
+      <Card style={styles.guesse}>
+        <Text># {listLength - itemData.index} : </Text>
+        <Text>{itemData.item}</Text>
       </Card>
     );
   };
@@ -210,12 +212,12 @@ const GameScreen = (props) => {
         </View>
         {/* view pour contenir liste essaies */}
         <View style={styles.listGuessesContainer}>
-          <ScrollView contentContainerStyle={styles.listGuessesScroll}>
-            {guesses.map((guesse, indice) => {
-              let len = guesses.length;
-              return renderGuesses(guesse, len - indice);
-            })}
-          </ScrollView>
+          <FlatList
+            keyExtractor={(item) => item.toString()}
+            data={guesses}
+            renderItem={renderGuesses.bind(this, guesses.length)}
+            contentContainerStyle={styles.listGuessesScroll}
+          />
         </View>
         {/* view pour contenir tous button */}
         <View style={{ alignItems: 'center' }}>
